@@ -1,16 +1,29 @@
-# Code conventions for programming
+# Style guide for programming
 
-## Why code conventions
+This style guide aims not to replace existing style guides for programming 
+languages. Instead, it tries to augment those guides with some (opinionated) 
+rules to simplify coding in a multilanguage environment.
 
-* language agnostic
-* consistency
-* one line if-statements
+## Why this style guide?
+
+In environments where multiple programming languages are used, it is often 
+challenging to find a programming style that suits all languages. Yet it is 
+very desirable to be consistent with your coding style regardless of the used 
+programming language. 
+
+This guide tries to suggest rules that can be applied to every programming 
+language without conflicting with existing style guides.
 
 ## Conventions
 
 ### General
 
-Use `UTF-8` as file encoding whenever possible. 
+Use `UTF-8` as file encoding whenever possible.
+
+On smaller displays or situations where multiple files are displayed side by 
+side, it is desirable to not have to scroll horizontally. Therefore, aim for a 
+maximum of **80** characters per line. If not possible, do a hard break at 120 
+characters at the latest.
 
 ### Comments
 
@@ -24,7 +37,7 @@ self-explanatory name.
 This is not an endorsement to completely avoid comments. Use comments whenever
 they seem appropriate.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 // has correct length and starts with an uppercase S
@@ -33,7 +46,7 @@ if (line.length >= 10 && line.length <= 50 && line.startsWith("S")) {
 }
 ```
 
-**Better**
+**:white_check_mark: Good**
 
 ```typescript
 const hasValidLength = line.length >= 10 && line.length <= 50;
@@ -52,14 +65,14 @@ Some languages allow for multiple different styles of quotes. Unless there is
 a special meaning attached to it, choose one style and stick with it. If
 possible, use linter or prettifier to enforce the choice.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 const hello = 'hello';
 const world = "world";
 ```
 
-**Good**
+**:white_check_mark: Good**
 
 ```typescript
 const hello = "hello";
@@ -79,7 +92,7 @@ Magic numbers or strings are values typically used for method calls or
 comparisons. A reader can normally not know what these values mean and why they
 are set the way they are. Use instead constants with a meaningful name.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 if (line.length >= 10 && line.length <= 50) {
@@ -87,7 +100,7 @@ if (line.length >= 10 && line.length <= 50) {
 }
 ```
 
-**Good**
+**:white_check_mark: Good**
 
 ```typescript
 const MIN_LENGTH = 10;
@@ -121,7 +134,7 @@ This rule is only a guiding principle. There is no such thing as “right” or
 “wrong” in this case. Shorter blocks are easier to read and therefore easier
 to understand.
 
-> [!NOTE]
+> [!TIP]
 > Aim for 10 to 15 lines. At 25 lines really look at the code and try to simplify it.
 
 #### Placing of braces
@@ -132,7 +145,33 @@ guide. Java, for instance, defines that braces should start at the end of a line
 where as most C/C++ style guides suggest starting at a new line. Choose one and
 stick to it.
 
-**Wrong**
+#### One line blocks
+
+Especially `if`-statements are often very short, and the body contains only one 
+line of code. Most languages allow omitting the braces for the body. Do not omit 
+braces! This often leads to hard to find errors when adding more lines later.
+
+**:x: Wrong**
+```typescript
+if (someCondition) 
+  myMethod();
+```
+
+**:white_check_mark: Good**
+```typescript
+if (someCondition) {
+  myMethod();
+}
+```
+
+> [!TIP]
+> If the condition and the action are very short, it is possible to put everything 
+> on one line.
+> ```typescript
+> if (someCondition) myMethod();
+> ```
+
+**:x: Wrong**
 
 ```typescript
 function myMethod1() {
@@ -144,31 +183,33 @@ function myMethod2() {
 }
 ```
 
-**Good**
+**:white_check_mark: Good**
 
-```typescript
-function myMethod1() {
+```Java
+void myMethod1() {
   /* ... */
 }
 
-function myMethod2() {
+
+void myMethod2() {
   /* ... */
 }
 ```
 
 or
 
-```typescript
-function myMethod1() {
+```CPP
+void myMethod1() 
+{
   /* ... */
 }
 
-function myMethod2() {
+
+void myMethod2() 
+{
   /* ... */
 }
 ```
-
-### Type annotations
 
 ### Naming
 
@@ -192,14 +233,14 @@ coordinates in a grid `x` and `y` are suitable names.
 
 Avoid abbreviations.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 const len = name.length;
 const l = name.length;
 ```
 
-**Good**
+**:white_check_mark: Good**
 
 ```typescript
 const length = name.length;
@@ -236,7 +277,7 @@ named just `settings()`. As long as it is crystal clear what the method is
 supposed to do, this might be okay. Since this is usually not the case, still
 use verbs in method names.
 
-> [!NOTE]
+> [!TIP]
 > If naming a method is hard, check if the method is actually doing only one
 > thing. Finding it hard to name methods is usually a good indicator for a wrong
 > abstraction.
@@ -252,7 +293,7 @@ Classes are “things” that fulfill a certain purpose in the program. Use noun
 to name classes. In many languages class names are capitalized and use camel
 case. Stick to the style guides of the used programming language.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 class Run {
@@ -263,14 +304,14 @@ In the above example it would be hard to name the method that actually runs
 the code since `run()` is already used as a class name. Finding it hard to name
 methods in a class can also serve as an indicator for good or bad class names.
 
-**Good**
+**:white_check_mark: Good**
 
 ```typescript
 class Runner {
 }
 ```
 
-Do not name interfaces with a leading `I`. An interface is still a type and 
+Do not name interfaces with a leading `I`. An interface is still a type and
 should therefore adhere to the naming principle of classes.
 
 ### Spacing
@@ -286,7 +327,7 @@ Always enclose blocks (`for`, `if`, ...) with blank lines. If the block is the
 first statement in a method, omit the leading blank line. If the block is the
 last statement in a method, omit the trailing blank line.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 function method() {
@@ -298,7 +339,7 @@ function method() {
 }
 ```
 
-**Good**
+**:white_check_mark: Good**
 
 ```typescript
 function method() {
@@ -315,7 +356,7 @@ function method() {
 Always separate a `return`-statement from the rest of the code. If the statement
 is the first statement in an enclosing block, omit the leading blank line.
 
-**Wrong**
+**:x: Wrong**
 
 ```typescript
 function method(value: SomeEnum) {
@@ -334,7 +375,8 @@ function method(value: SomeEnum) {
   }
 }
 ```
-**Good**
+
+**:white_check_mark: Good**
 
 ```typescript
 function method(value: SomeEnum) {
@@ -343,6 +385,24 @@ function method(value: SomeEnum) {
       return "A";
     case "value2":
       return "B";
+    default:
+      return "C";
+  }
+}
+```
+
+Since a `case` constitutes a block the following is good too. Chose whatever is 
+better readable.
+
+```typescript
+function method(value: SomeEnum) {
+  switch (value) {
+    case "value1":
+      return "A";
+      
+    case "value2":
+      return "B";
+      
     default:
       return "C";
   }
@@ -360,7 +420,8 @@ Don’t separate variables with blank lines.
 If different visibilities (`private`, `public`,…) are declared, separate the
 blocks with blank lines.
 
-**Wrong**
+**:x: Wrong**
+
 ```typescript
 class AClass {
   private readonly hello = "hello"; // used as a variable, therefore no uppercase name
@@ -369,44 +430,79 @@ class AClass {
 }
 ```
 
-**Good**
+**:white_check_mark: Good**
+
 ```typescript
 class AClass {
   private readonly hello = "hello"; // used as a variable, therefore no uppercase name
   private readonly world = "world"; // used as a variable, therefore no uppercase name
-  
+
   public greeting = "Your name";
 }
 ```
 
 ### Order of things
 
-Always keep structurally similar things grouped together. Start with declaring 
+Always keep structurally similar things grouped together. Start with declaring
 variables / constants, then proceed with the algorithmic things.
 
-In classes group by structure and then by visibility. Start with instance / 
-class variables / constants, then declare constructors, then declare methods. 
+In classes group by structure and then by visibility. Start with instance /
+class variables / constants, then declare constructors, then declare methods.
 
 #### Variables / Constants
 
 Always declare “proper” constants first, then declare the variables.
 
-Order by visibility. 
+Order by visibility.
 
 1. `private`
 2. `protected`
 3. `public`
 
+**:white_check_mark: Good**
+
+```typescript
+class AClass {
+
+  public readonly A_PROPER_CONSTANT = "Avoids a magic string";
+
+  private readonly field = 0;
+  private readonly anotherField = 0;
+
+  protected aProtectedField = 0;
+
+
+  public constructor() {
+    /* ... */
+  }
+
+
+  public aMethod() {
+    /* ... */
+  }
+
+
+  public anotherMethod() {
+    /* ... */
+  }
+
+
+  private aPrivateMethod() {
+    /* ... */
+  }
+
+}
+```
+
 #### Methods
 
-Always group methods by visibility. Declare the `public` methods first. They 
-define the usable API of a class and should therefore be declared first. Follow 
+Always group methods by visibility. Declare the `public` methods first. They
+define the usable API of a class and should therefore be declared first. Follow
 with `protected` methods and then with `private` methods.
 
-Aim to group methods also by their purpose. This is not always possible. 
-Consider a `public` function that uses some `private` helper functions. If other 
+Aim to group methods also by their purpose. This is not always possible.
+Consider a `public` function that uses some `private` helper functions. If other
 `public` methods are present too, it is not always possible to group by function.
-
 
 ## Author
 
